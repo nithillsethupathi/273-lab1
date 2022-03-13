@@ -1,9 +1,9 @@
 import Navbar from "./Navbar"
-export default function Layout({ children }: {children: any}) {
+export default function Layout({ children }) {
     return (
-      <div className="content">
+      <>
         <Navbar />
-        {children}
-      </div>
+        <main>{children}</main>
+      </>
     )
-  }
+}
