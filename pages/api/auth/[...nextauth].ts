@@ -10,6 +10,9 @@ export default NextAuth({
     brandColor: "#FFA500", 
     logo: "https://logos-world.net/wp-content/uploads/2020/12/Etsy-Emblem.png"
   },
+
+
+
   adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
