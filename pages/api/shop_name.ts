@@ -22,5 +22,6 @@ export default async function createShop(req: NextApiRequest, res: NextApiRespon
     const shop = await prisma.shop.create({
         data: shopData
     })
-    res.json(shop);
+    
+    res.send(shop);
 }

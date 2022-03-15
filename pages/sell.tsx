@@ -4,7 +4,7 @@ export default function sell(){
     if (status === "unauthenticated") {
         return signIn()
     }
-    const getShop = async event => {
+    const createShop = async event => {
         event.preventDefault()
         const response = await fetch('/api/shop_name', {
             method: 'POST',
@@ -17,11 +17,33 @@ export default function sell(){
             })
         });
 
+        console.log(response)
         if (!response.ok){
             throw new Error(response.statusText);
         }
 
         return await response.json();
+    }
+
+    const getShop = async event => {
+        event.preventDefault()
+        const val = event.target.search.value
+        const response = await fetch(`/api/shop/${val}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+              }
+        });
+
+
+        if (!response.ok){
+            throw new Error(response.statusText);
+        }
+        if (response.formData.length == 0){
+            createShop
+        } else{
+            return alert("Shop name already exists, please try a different name")
+        }
     }
     return(
         <div className="m-[10%]">
@@ -34,8 +56,8 @@ export default function sell(){
             <div className="mt-5 flex justify-center">
                 <div className="mb-3 xl:w-96">
                     <form onSubmit={getShop} className="input-group relative items-center w-full mb-4">
-                        <input type="search" id="search" className="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-orange-500 focus:outline-none" placeholder="Search" aria-label="Search" aria-describedby="button-addon3"></input>
-                        <button className="btn mt-5 ml-[25%]  px-6 py-2 border-2 border-orange-500 text-orange-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out" id="name"  type="button">Check Availability</button>
+                        <input type="text" id="search" className="form-control relative flex-auto min-w-0 block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-orange-500 focus:outline-none" placeholder="Search" aria-label="Search" aria-describedby="button-addon3"/>
+                        <input type="submit" className="mt-5 ml-[30%]  px-6 py-2 border-2 border-orange-500 text-orange-600 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out" value="Create shop"/>
                     </form>
                 </div>
             </div>
