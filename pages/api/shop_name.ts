@@ -23,5 +23,5 @@ export default async function createShop(req: NextApiRequest, res: NextApiRespon
         data: shopData
     })
     
-    res.send(shop);
+    return res.status(200).json(shop);
 }

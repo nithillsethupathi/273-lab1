@@ -4,25 +4,22 @@ export default function sell(){
     if (status === "unauthenticated") {
         return signIn()
     }
-    const createShop = async event => {
-        event.preventDefault()
+    async function createShop(value){
+
         const response = await fetch('/api/shop_name', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
               },
             body: JSON.stringify({
-                name: event.target.search.value,
+                name: value,
                 user: {connect: {email: session?.user?.email}}
             })
         });
 
-        console.log(response)
         if (!response.ok){
             throw new Error(response.statusText);
         }
-
-        return await response.json();
     }
 
     const getShop = async event => {
@@ -34,16 +31,23 @@ export default function sell(){
                 'Content-Type': 'application/json'
               }
         });
-
-
+        var data = '';
+        try{
+            data = await response.json();
+        } catch{
+            data = ''
+        }
         if (!response.ok){
             throw new Error(response.statusText);
         }
-        if (response.formData.length == 0){
-            createShop
+        console.log(data)
+        if (data == ''){
+            await createShop(val)
+            return alert("Shop created successfully")
         } else{
             return alert("Shop name already exists, please try a different name")
         }
+
     }
     return(
         <div className="m-[10%]">

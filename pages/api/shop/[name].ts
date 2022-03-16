@@ -11,5 +11,5 @@ export default async function getShopByName(req: NextApiRequest, res: NextApiRes
                     name: req.query.name
                 }
             });
-            return res.json(shopName)
+            res.json(shopName)
 }
