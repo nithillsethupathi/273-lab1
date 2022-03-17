@@ -1,18 +1,30 @@
 import { useSession, signIn, signOut } from "next-auth/react"
-import ReactStars from "react-rating-stars-component";
 import Link from 'next/link'
+import { useState, useEffect } from "react"
+// export async function getStaticProps() {
+//     const res = await fetch('http://localhost:3000/api/user/getFavorites')
+//     console.log(res)
+//     const data = await res.json();
+//     console.log(data)
+//     return {
+//         props: {
+//             items: data
+//         }
+//     }
+// }
+const profile = () => {
+    const [data, setData] = useState<any[]>([])
+    const [isLoading, setLoading] = useState(false)
 
-export async function getStaticProps() {
-
-    const res = await fetch('http://localhost:3000/api/user/getFavorites')
-    const data = await res.json()
-    return {
-        props: {
-            items: data
-        }
-    }
-}
-const profile = ({ items }) => {
+    useEffect(() => {
+        setLoading(true)
+        fetch('http://localhost:3000/api/user/getFavorites')
+          .then((res) => res.json())
+          .then((data) => {
+            setData(data)
+            setLoading(false)
+          })
+      }, [])
 
     const { data: session, status } = useSession()
     if (status === "unauthenticated") {
@@ -43,7 +55,7 @@ const profile = ({ items }) => {
                 </p>
             </div>
             <div className="flex flex-wrap -mx-3 overflow-hidden">
-            {items.map(item => (
+            {data?.map(item => (
                     <div key={item.productIdd} className="my-3 px-3 w-full overflow-hidden sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4">
                       
                       <img className="rounded-sm h-64 w-64" src={String(item.image)}/>
