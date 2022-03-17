@@ -12,7 +12,13 @@ export default NextAuth({
   },
 
 
-
+  callbacks: {
+    session: async ({ session, user }) => {
+      session.userId = user.id;    
+      return Promise.resolve(session);
+    }
+  },
+  
   adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({

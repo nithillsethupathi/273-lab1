@@ -8,7 +8,7 @@ export default async function getShopByName(req: NextApiRequest, res: NextApiRes
             }
             const shopName = await prisma.shop.findUnique({
                 where: {
-                    name: req.query.name
+                    name: String(req.query.name)
                 }
             });
             res.json(shopName)
