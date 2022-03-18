@@ -43,7 +43,7 @@ const products = ({ item }) => {
                 user: {connect: {email: session?.user?.email}}
             })
         });
-        //alert("Added to your favorites")
+        alert("Added to your favorites")
     }  
 
     

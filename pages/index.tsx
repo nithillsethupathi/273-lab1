@@ -95,7 +95,7 @@ const home = ({items}) => {
           <h3 className="text-5xl italic font-semibold">
             What is Etsy?
           </h3>
-          <div className="mx-[10%] grid text-center grid-cols-3 gap-12 mt-5">
+          <div className="mx-[10%] mb-8 grid text-center grid-cols-3 gap-12 mt-5">
             <div>
               <p className="text-3xl font-semibold">A community doing good</p>
               <p className="text-2xl font-light">Etsy is a global online marketplace, where people come together to make, sell, buy, and collect unique items. We’re also a community pushing for positive change for small businesses, people, and the planet. Here are some of the ways we’re making a positive impact, together.</p>

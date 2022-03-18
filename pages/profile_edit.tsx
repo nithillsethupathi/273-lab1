@@ -1,10 +1,22 @@
 import { useSession, signIn, signOut } from "next-auth/react"
+import { CountryDropdown, RegionDropdown, CountryRegionData } from 'react-country-region-selector';
+import { useState } from "react";
 export default function profile_edit() {
 
 
+    const [country, setCountry] = useState("United States")
+    const [region, setRegion] = useState("California")
     const { data: session, status } = useSession()
     if (status === "unauthenticated") {
         return signIn()
+    }
+
+    function selectCountry(val) {
+        setCountry(val);
+    }
+
+    function selectRegion(val) {
+        setRegion(val);
     }
 
     return (
@@ -42,8 +54,24 @@ export default function profile_edit() {
                     <label className="flex text-gray-700 text-lg font-bold mb-2">
                         Country
                     </label>
-                    <input className="shadow ml-5 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="country" type="country" placeholder="Country"></input>
+                    <div className="shadow ml-5 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <CountryDropdown
+                            value={country}
+                            onChange={(val) => selectCountry(val)} />
+                    </div>
                 </div>
+                <div className="flex mb-4 mt-5">
+                    <label className="flex text-gray-700 text-lg font-bold mb-2">
+                        State
+                    </label>
+                    <div className="shadow ml-5 appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <RegionDropdown
+                            country={country}
+                            value={region}
+                            onChange={(val) => selectRegion(val)} />
+                    </div>
+                </div>
+
                 <div className="flex mb-4 mt-5">
                     <label className="flex text-gray-700 text-lg items-start mt-5 font-bold mb-2">
                         About
@@ -56,6 +84,6 @@ export default function profile_edit() {
                     </button>
                 </div>
             </form>
-        </main>
+        </main >
     )
 }
