@@ -65,6 +65,7 @@ const profile = () => {
                     </button>
                 </p>
             </div>
+            <main className="container mx-auto p-4">
             <div className="flex flex-wrap -mx-3 overflow-hidden">
             {data?.map(item => (
                     <div id={item.productId} className="my-3 px-3 w-full overflow-hidden sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4">
@@ -87,6 +88,7 @@ const profile = () => {
                 ))
 }
             </div>
+            </main>
         </div>
     )
 }
