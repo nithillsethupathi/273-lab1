@@ -1,8 +1,4 @@
-import type { NextPage } from 'next';
-import Head from 'next/head';
 import { useSession, signIn, signOut } from "next-auth/react"
-import Navbar from '../comps/Navbar'
-import { Menu } from '@headlessui/react'
 import Link from 'next/link'
 import ReactStars from "react-rating-stars-component";
 function MyLink(props: any) {
