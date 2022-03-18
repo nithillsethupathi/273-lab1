@@ -9,7 +9,7 @@ const profile = () => {
 
     useEffect(() => {
         setLoading(true)
-        fetch('http://localhost:3000/api/user/getFavorites')
+        fetch('/api/user/getFavorites')
           .then((res) => res.json())
           .then((data) => {
             setData(data)
