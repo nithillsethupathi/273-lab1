@@ -28,7 +28,6 @@ const products = ({ item }) => {
 
     const { data: session, status } = useSession()
     async function createFavorites(){
-        console.log(item.id)
         await fetch(`/api/user/createFavorites`, {
             method: 'POST',
             headers: {
@@ -46,8 +45,25 @@ const products = ({ item }) => {
         alert("Added to your favorites")
     }  
 
-    
-    
+    async function createCart(){
+        console.log(item.id)
+        await fetch(`/api/cart/createCart`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+              },
+            body: JSON.stringify({
+                productId: String(item.id),
+                title: String(item.title),
+                price: item.price,
+                image: String(item.image),
+                email: String(session?.user?.email),
+                user: {connect: {email: session?.user?.email}}
+            })
+        });
+        alert("Item added to your Cart")
+    }  
+
     return (
         <div className="mx-[20%] flex flex-wrap overflow-hidden">
 
@@ -76,9 +92,15 @@ const products = ({ item }) => {
                     {item.description}
                 </p>
                 {session && (
+                    <div>
                 <button onClick={() => createFavorites()} className="mt-5 bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                         Add to your Favorites
                 </button>
+                <button onClick={() => createCart()} className="mt-5 bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                Add to your Cart
+                </button>
+                </div>
+        
                 )
                 }
             </div>
