@@ -71,13 +71,18 @@ model Cart {
 }
 
 model Orders {
-  orderNumber Int    @id @default(autoincrement())
+  id          String @id @default(cuid())
   email       String
   userId      String
+  orderNumber Int
   productId   String
   title       String
   image       String
   user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model OrderNumber {
+  orderNumber Int @id @default(autoincrement())
 }
 
 model Shop {

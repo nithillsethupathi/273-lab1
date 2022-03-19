@@ -41,16 +41,41 @@ export default function cart() {
         Router.reload()
     }
 
+    async function deleteAll(){
+        const response = await fetch(`/api/cart/deleteAll`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: (session?.user?.email)
+            })
+        });
+        if (!response.ok) {
+            throw new Error(response.statusText);
+        }
+    }
+
     async function createOrder(data){
+        const response = await fetch(`/api/orders/createOrderNumber`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+        const orderNo = await response.json();
+        console.log(orderNo)
+
         await data.map((item) => {
             console.log(item.id)
-            fetch(`/api/cart/createOrder`, {
+            fetch(`/api/orders/createOrder`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                   },
                 body: JSON.stringify({
                     productId: String(item.id),
+                    orderNumber: parseInt(JSON.stringify(orderNo.orderNumber)),
                     title: String(item.title),
                     image: String(item.image),
                     email: String(session?.user?.email),
@@ -58,8 +83,10 @@ export default function cart() {
                 })
             });
         })
-        
-        alert("Item added to your Cart")
+
+        await deleteAll()
+
+        Router.push('/profile')
     }  
     
     return (

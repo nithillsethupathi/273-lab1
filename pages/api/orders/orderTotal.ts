@@ -11,9 +11,9 @@ export default async function getOrder(
   if (req.method !== 'GET') {
     res.status(500).json({ message: 'get request expected' })
   }
-  const fav = await prisma.orders.findMany({
+  const fav = await prisma.orders.findFirst({
     where: {
-      orderNumber: parseInt(req.body.orderNumber)
+      email: String(session?.user?.email),
     },
   })
   res.json(fav)
