@@ -2,7 +2,16 @@ import ReactStars from "react-rating-stars-component";
 import { useSession, signIn, signOut } from "next-auth/react"
 
 export async function getStaticPaths() {
-    const res = await fetch('https://273-lab1.vercel.app/api/store/getAllItems')
+    const res = await fetch('https://273-lab1.vercel.app/api/store/getAllItems',
+        {
+            method: "GET",
+            headers: {
+                "User-Agent":
+                    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36",
+                Accept: "application/json; charset=UTF-8",
+            },
+        }
+    )
     const pros = await res.json()
     const paths = pros.map((pro) => ({
         params: { id: String(pro.productId) },
@@ -12,7 +21,16 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-    const res = await fetch(`https://273-lab1.vercel.app/api/store/${params.id}`);
+    const res = await fetch(`https://273-lab1.vercel.app/api/store/${params.id}`,
+        {
+            method: "GET",
+            headers: {
+                "User-Agent":
+                    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36",
+                Accept: "application/json; charset=UTF-8",
+            },
+        }
+    );
     const data = await res.json();
     console.log(data[0])
     return {
@@ -27,41 +45,41 @@ export async function getStaticProps({ params }) {
 const products = ({ item }) => {
 
     const { data: session, status } = useSession()
-    async function createFavorites(){
+    async function createFavorites() {
         await fetch(`/api/user/createFavorites`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-              },
+            },
             body: JSON.stringify({
                 productId: String(item.id),
                 title: String(item.title),
                 price: item.price,
                 image: String(item.image),
                 email: String(session?.user?.email),
-                user: {connect: {email: session?.user?.email}}
+                user: { connect: { email: session?.user?.email } }
             })
         });
         alert("Added to your favorites")
-    }  
+    }
 
-    async function createCart(){
+    async function createCart() {
         await fetch(`/api/cart/createCart`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-              },
+            },
             body: JSON.stringify({
                 productId: String(item.id),
                 title: String(item.title),
                 price: item.price,
                 image: String(item.image),
                 email: String(session?.user?.email),
-                user: {connect: {email: session?.user?.email}}
+                user: { connect: { email: session?.user?.email } }
             })
         });
         alert("Item added to your Cart")
-    }  
+    }
 
     return (
         <div className="mx-[20%] flex flex-wrap overflow-hidden">
@@ -85,14 +103,14 @@ const products = ({ item }) => {
                 </p>
                 {session && (
                     <div>
-                <button onClick={() => createFavorites()} className="mt-5 bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                        Add to your Favorites
-                </button>
-                <button onClick={() => createCart()} className="mt-5 bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                Add to your Cart
-                </button>
-                </div>
-        
+                        <button onClick={() => createFavorites()} className="mt-5 bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                            Add to your Favorites
+                        </button>
+                        <button onClick={() => createCart()} className="mt-5 bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                            Add to your Cart
+                        </button>
+                    </div>
+
                 )
                 }
             </div>
