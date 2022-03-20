@@ -13,6 +13,7 @@ export default function sell(){
               },
             body: JSON.stringify({
                 name: value,
+                email: session?.user?.email,
                 user: {connect: {email: session?.user?.email}}
             })
         });

@@ -1,6 +1,8 @@
 import { useSession, signIn, signOut } from "next-auth/react"
 import Link from 'next/link'
 import ReactStars from "react-rating-stars-component";
+import { useEffect, useState } from "react"
+
 function MyLink(props: any) {
   let { href, children, ...rest } = props
   return (
@@ -10,18 +12,29 @@ function MyLink(props: any) {
   )
 }
 
-export async function getStaticProps(){
 
-  const res = await fetch('https://fakestoreapi.com/products');
-  const data = await res.json();
-  return {
-      props: { 
-         items: data,
-      },
-  }
-}
+const home = () => {
 
-const home = ({items}) => {
+  const [data, setData] = useState('')
+  const [items, setItems] = useState<any[]>([])
+  const [isLoading, setLoading] = useState(false)
+  const [title, setTitle] = useState('')
+  const [image, setImage] = useState('')
+  const [category, setCategory] = useState('')
+  const [price, setPrice] = useState('')
+  const [description, setDescription] = useState('')
+
+  useEffect(() => {
+    setLoading(true)
+    fetch('/api/store/getItem')
+        .then((res) => res.json())
+        .then((items) => {
+            setItems(items)
+            setLoading(false)
+        })
+}, [])
+
+
   const { data: session } = useSession()
   return (
       <div>
@@ -60,17 +73,12 @@ const home = ({items}) => {
                     <div key={item.id} className="my-3 px-3 w-full overflow-hidden sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4">
                       
                       <img className="rounded-sm h-64 w-64" src={String(item.image)}/>
-                      <Link href={String("products/"+(item.id))}>
+                      <Link href={String("products/"+(item.Productid))}>
                         <a className='text-2xl text-orange-400'>
                             {item.title}
                         </a>
                       </Link>
                       <p>
-                <ReactStars
-                    value={item.rating.rate}
-                    starRatedColor="orange"
-                    count={5}
-                />
                 </p>
                         <p>
                             ${item.price}

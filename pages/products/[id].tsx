@@ -2,18 +2,18 @@ import ReactStars from "react-rating-stars-component";
 import { useSession, signIn, signOut } from "next-auth/react"
 
 export async function getStaticPaths() {
-    const res = await fetch('https://fakestoreapi.com/products')
+    const res = await fetch('http://localhost:3000/api/store/getItem')
     const pros = await res.json()
 
     const paths = pros.map((pro) => ({
-        params: { id: pro.id.toString() },
+        params: { id: pro.ProductId.toString() },
     }))
 
     return { paths, fallback: false }
 }
 
-export async function getStaticProps({ params }) {
-    const res = await fetch(`https://fakestoreapi.com/products/${params.id}`);
+export async function getSerProps({ params }) {
+    const res = await fetch(`http://localhost:3000/api/store/getItem/${params.id}`);
     const data = await res.json();
     return {
         props: {

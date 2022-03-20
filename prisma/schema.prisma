@@ -46,6 +46,7 @@ model User {
   favorites     Favorites[]
   cart          Cart[]
   orders        Orders[]
+  store         Store[]
 }
 
 model Favorites {
@@ -88,8 +89,22 @@ model OrderNumber {
 model Shop {
   id     String @id @default(cuid())
   name   String @unique
+  email  String
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+}
+
+model Store {
+  productId   Int    @id @default(autoincrement())
+  title       String
+  email       String
+  image       String
+  category    String
+  price       String
+  description String
+  userId      String
+  user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
 }
 
