@@ -26,7 +26,7 @@ const home = () => {
 
   useEffect(() => {
     setLoading(true)
-    fetch('/api/store/getItem')
+    fetch('/api/store/getAllItems')
         .then((res) => res.json())
         .then((items) => {
             setItems(items)

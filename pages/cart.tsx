@@ -79,6 +79,7 @@ export default function cart() {
                     title: String(item.title),
                     image: String(item.image),
                     email: String(session?.user?.email),
+                    price: Number(item.price),
                     user: {connect: {email: session?.user?.email}}
                 })
             });
