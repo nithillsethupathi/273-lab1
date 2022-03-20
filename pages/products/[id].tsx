@@ -2,11 +2,11 @@ import ReactStars from "react-rating-stars-component";
 import { useSession, signIn, signOut } from "next-auth/react"
 
 export async function getStaticPaths() {
-    const res = await fetch('http://273-lab1.vercel.app/api/store/getItembyId')
+    const res = await fetch('http://273-lab1.vercel.app/api/store/getAllItems')
     const pros = await res.json()
 
     const paths = pros.map((pro) => ({
-        params: { id: pro.ProductId.toString() },
+        params: { id: parseInt(pro.ProductId) },
     }))
 
     return { paths, fallback: false }
