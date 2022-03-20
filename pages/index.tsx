@@ -73,7 +73,7 @@ const home = () => {
                     <div key={item.id} className="my-3 px-3 w-full overflow-hidden sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4">
                       
                       <img className="rounded-sm h-64 w-64" src={String(item.image)}/>
-                      <Link href={String("products/"+(item.Productid))}>
+                      <Link href={String("products/"+(item.productId))}>
                         <a className='text-2xl text-orange-400'>
                             {item.title}
                         </a>
