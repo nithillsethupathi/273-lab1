@@ -1,18 +1,28 @@
 import ReactStars from "react-rating-stars-component";
 import { useSession, signIn, signOut } from "next-auth/react"
 
-export async function getStaticPaths() {
-    const res = await fetch('https://273-lab1.vercel.app/api/store/getAllItems')
+async function getAllItemsHandler(){
+    const res = await fetch('http://localhost:3000/api/store/getAllItems')
     const pros = await res.json()
+    return pros
+}
+
+async function getItemHandler({params}){
+    const res = await fetch(`http://localhost:3000/api/store/${params.id}`)
+    const data = await res.json()
+    return data
+}
+
+export async function getStaticPaths() {
+    const pros = await getAllItemsHandler()
     const paths = pros.map((pro) => ({
         params: { id: String(pro.productId) },
     }))
-    return { paths, fallback: true }
+    return { paths, fallback: false }
 }
 
 export async function getStaticProps({ params }) {
-    const res = await fetch(`https://273-lab1.vercel.app/api/store/${params.id}`);
-    const data = await res.json();
+    const data = await getItemHandler({params})
     console.log(data[0])
     return {
         props: {
