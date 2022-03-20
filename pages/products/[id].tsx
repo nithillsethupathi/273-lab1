@@ -44,7 +44,7 @@ const products = ({ item }) => {
             body: JSON.stringify({
                 productId: String(item.id),
                 title: String(item.title),
-                price: item.price,
+                price: Number(item.price),
                 image: String(item.image),
                 email: String(session?.user?.email),
                 user: { connect: { email: session?.user?.email } }
@@ -62,7 +62,7 @@ const products = ({ item }) => {
             body: JSON.stringify({
                 productId: String(item.id),
                 title: String(item.title),
-                price: item.price,
+                price: Number(item.price),
                 image: String(item.image),
                 email: String(session?.user?.email),
                 user: { connect: { email: session?.user?.email } }
