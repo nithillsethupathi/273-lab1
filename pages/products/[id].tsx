@@ -7,11 +7,11 @@ export async function getStaticPaths() {
     const paths = pros.map((pro) => ({
         params: { id: String(pro.productId) },
     }))
-
+    fallback: true
     return { paths, fallback: false }
 }
 
-export async function getServerSideProps({ params }) {
+export async function getStaticProps({ params }) {
     const res = await fetch(`https://273-lab1.vercel.app/api/store/${params.id}`);
     const data = await res.json();
     console.log(data[0])
