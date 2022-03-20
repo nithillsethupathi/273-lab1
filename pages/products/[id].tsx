@@ -7,7 +7,7 @@ export async function getStaticPaths() {
     const paths = pros.map((pro) => ({
         params: { id: String(pro.productId) },
     }))
-    return { paths, fallback: false }
+    return { paths, fallback: true }
 }
 
 export async function getStaticProps({ params }) {
