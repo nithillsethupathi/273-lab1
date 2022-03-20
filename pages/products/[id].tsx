@@ -4,20 +4,20 @@ import { useSession, signIn, signOut } from "next-auth/react"
 export async function getStaticPaths() {
     const res = await fetch('https://273-lab1.vercel.app/api/store/getAllItems')
     const pros = await res.json()
-
     const paths = pros.map((pro) => ({
-        params: { id: parseInt(pro.ProductId) },
+        params: { id: String(pro.productId) },
     }))
 
     return { paths, fallback: false }
 }
 
 export async function getStaticProps({ params }) {
-    const res = await fetch(`https://273-lab1.vercel.app/api/store/getItembyId/${params.id}`);
+    const res = await fetch(`https://273-lab1.vercel.app/api/store/${params.id}`);
     const data = await res.json();
+    console.log(data[0])
     return {
         props: {
-            item: data,
+            item: data[0],
         },
     }
 }
@@ -46,7 +46,6 @@ const products = ({ item }) => {
     }  
 
     async function createCart(){
-        console.log(item.id)
         await fetch(`/api/cart/createCart`, {
             method: 'POST',
             headers: {
@@ -74,13 +73,6 @@ const products = ({ item }) => {
             <div className="my-10 px-10 w-1/2 overflow-hidden sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/2">
                 <p className='mt-5 text-2xl text-orange-400 font-semibold'>
                     {item.title}
-                </p>
-                <p>
-                <ReactStars
-                    value={item.rating.rate}
-                    starRatedColor="orange"
-                    count={5}
-                />
                 </p>
                 <p className='mt-5 text-1xl'>
                     ${item.price}
