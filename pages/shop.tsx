@@ -16,6 +16,7 @@ const shop = () => {
     const [description, setDescription] = useState('')
 
     useEffect(() => {
+        try{
         setLoading(true)
         fetch('/api/shop/getName')
             .then((res) => res.text())
@@ -23,6 +24,9 @@ const shop = () => {
                 setData(data)
                 setLoading(false)
             })
+        } catch{
+            setData('')
+        }
     }, [])
 
     useEffect(() => {

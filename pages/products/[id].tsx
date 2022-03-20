@@ -1,5 +1,6 @@
 import ReactStars from "react-rating-stars-component";
 import { useSession, signIn, signOut } from "next-auth/react"
+import Link from "next/link";
 
 // async function getAllItemsHandler(){
 //     const res = await fetch('http://localhost:3000/api/store/getAllItems')
@@ -93,12 +94,23 @@ const products = ({ item }) => {
                 </p>
                 {session && (
                     <div>
+                        <div>
                         <button onClick={() => createFavorites()} className="mt-5 bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                             Add to your Favorites
                         </button>
+                        </div>
+                        <div>
                         <button onClick={() => createCart()} className="mt-5 bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                             Add to your Cart
                         </button>
+                        </div>
+                        <div>
+                        <Link href={String("edit/" + (item.productId))}>
+                        <button className="mt-5 bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                            Edit Item
+                        </button>
+                        </Link>
+                        </div>
                     </div>
 
                 )
