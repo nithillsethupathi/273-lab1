@@ -1,8 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from ".prisma/client";
+import prisma from '../../../client'
 import { getMaxListeners } from "process";
 
-const prisma = new PrismaClient();
 export default async function deleteCart(req: NextApiRequest, res: NextApiResponse){
     if(req.method !== 'DELETE'){
         res.status(500).json({message: 'DELETE request expected'});

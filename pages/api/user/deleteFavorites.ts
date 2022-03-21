@@ -1,8 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from ".prisma/client";
-import { getMaxListeners } from "process";
+import prisma from '../../../client'
 
-const prisma = new PrismaClient();
 export default async function createFavorites(req: NextApiRequest, res: NextApiResponse){
     if(req.method !== 'DELETE'){
         res.status(500).json({message: 'DELETE request expected'});

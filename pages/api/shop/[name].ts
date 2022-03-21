@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from ".prisma/client";
-const prisma = new PrismaClient();
+import prisma from '../../../client'
+
 export default async function getShopByName(req: NextApiRequest, res: NextApiResponse){
             if(req.method !== 'GET'){
                 res.status(500).json({message: 'get request expected'});
